@@ -1,7 +1,8 @@
 "# schoolSoundSystemOnHallways" 
 
 usage: python "sonerie.py"
-
+in order for the "melodii.py" to run, you need to create a folder
+"mkdir melodii" in which you will add the songs that are best to be 3:00 minutes long
 ~ 
 Every romanian school system based pauses 
 the school bell will ring announcing the pauses
