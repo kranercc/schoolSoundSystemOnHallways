@@ -1,4 +1,4 @@
-"# schoolSoundSystemOnHallways" 
+# schoolSoundSystemOnHallways 
 
 usage: python "sonerie.py"
 
@@ -14,4 +14,3 @@ from classes and recreation time,it will automaticly play music.
 The last song can be played on the last 4 minutes of the pause.
 After that, the ringbell rings and the students go to classes
 
-~krane ( I. Catalin )
