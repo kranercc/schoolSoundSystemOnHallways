@@ -1,5 +1,6 @@
 package github.kranercc.automations;
 
+import java.awt.List;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +10,10 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.server.Skeleton;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 
 import javax.print.DocFlavor.INPUT_STREAM;
 import javax.sound.sampled.AudioFormat;
@@ -19,6 +24,8 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.text.DateFormatter;
+import javax.xml.ws.AsyncHandler;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
@@ -30,18 +37,64 @@ public class SongPlayer {
 	public void playSong(String songToBePlayedString){
 		
 		String songExtensionString = songToBePlayedString.substring(songToBePlayedString.lastIndexOf(".")+1);
+		
+		
+		//time check first
+		shouldPlay();
+		
 		if(songExtensionString.equals("wav"))
 		{
 			System.out.println("Using WAV Logics...");
-			Play_WAV(songToBePlayedString);
+			//Play_WAV(songToBePlayedString);
 		}
 		if(songExtensionString.equals("mp3"))
 		{
 			System.out.println("Using MP3 Logics...");
-			Play_MP3(songToBePlayedString);
+			//Play_MP3(songToBePlayedString);
 		
 		}
 		
+	}
+	
+	public boolean shouldPlay()
+	{
+		
+		ArrayList<Integer> musicHours = new ArrayList<Integer>(Arrays.asList(8,9,10,11,12,13,14));
+		ArrayList<Integer> musicDaysArrayList = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5));
+		
+		
+		int hourNow = new Date().getHours();
+		int minuteNow = new Date().getMinutes();
+		int dayNow = new Date().getDay(); // luni e 1 
+		
+		//check for day
+		if (musicDaysArrayList.contains(dayNow)) {
+			//hour and minute check
+			if (musicHours.contains(hourNow)) {
+				
+				if (hourNow <= 10 && minuteNow >= 51 ) {
+					return true;
+				}
+				
+				
+				if (hourNow > 10 && minuteNow >= 1) {
+					return true;
+				}
+				
+				
+			}			
+			//i dont look thic until i turn around checcc
+			
+		}
+		
+		
+		//
+		//	SPECIAL CASES CHEEEECK
+		//
+		
+		
+		//System.out.println(hourNow + "<>" + minuteNow + "<>" + dayNow);
+		return false;
 	}
 	
 	private void Play_WAV(String nameString)
