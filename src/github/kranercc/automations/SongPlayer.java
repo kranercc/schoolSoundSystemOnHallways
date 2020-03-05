@@ -73,6 +73,7 @@ public class SongPlayer {
 					e1.printStackTrace();
 				}
 				audioClip.start();
+				
 	}
 	
 	private void Play_MP3(String nameString)

@@ -110,7 +110,27 @@ public class MainControlUI extends JFrame {
 			public void itemStateChanged(ItemEvent e) {
 				if(chckbxAutoPlay.isSelected())
 				{
-					new RandomMusicChooser().playRandomMusic();
+
+					Thread t2 = new Thread(new Runnable() {
+						@Override
+						public void run() {
+							new RandomMusicChooser().playRandomMusic();
+						}
+					});
+					threads.add(t2);
+					
+					try {
+						threads.get(0).start();
+					} catch (Exception e2) {
+						// TODO: handle exception
+					}
+
+					if(threads.size() > 1)
+					{
+						threads.get(0).stop();
+						threads.get(1).start();
+						threads.remove(0);
+					}
 				}
 			}
 		});
