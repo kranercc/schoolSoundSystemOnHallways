@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import github.kranercc.automations.SongPlayer;
 import github.kranercc.input.CustomSong_field;
 import github.kranercc.randomMusic.RandomMusicChooser;
 
@@ -21,17 +22,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.Color;
 
 public class MainControlUI extends JFrame {
 
 	private JPanel mainContentPane;
 	private JTextField textFieldSongName;
 	private CustomSong_field customSong_field;
+	private SongPlayer songPlayer;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -48,6 +52,7 @@ public class MainControlUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MainControlUI() {
+		songPlayer = new SongPlayer();
 		customSong_field = new CustomSong_field();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -114,7 +119,32 @@ public class MainControlUI extends JFrame {
 					Thread t2 = new Thread(new Runnable() {
 						@Override
 						public void run() {
-							new RandomMusicChooser().playRandomMusic();
+							while (true) {
+								try {
+									//
+									//LOGICS
+									//
+									Thread.sleep(1000);
+									if (songPlayer.shouldPlayBell()) {
+										songPlayer.bellRing();
+									}
+									if (songPlayer.shouldPlayMusic()) {
+										
+										
+										
+										//aici e problema ca se blocheaza threadu cand canta 
+										
+										
+										
+										new RandomMusicChooser().playRandomMusic();
+									}
+									
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+							//new RandomMusicChooser().playRandomMusic();
 						}
 					});
 					threads.add(t2);
@@ -137,6 +167,23 @@ public class MainControlUI extends JFrame {
 		
 		chckbxAutoPlay.setBounds(30, 159, 160, 23);
 		mainContentPane.add(chckbxAutoPlay);
+		
+		JButton btnFireAlarm = new JButton("Fire Alarm");
+		btnFireAlarm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Thread( new Runnable() {
+					
+					@Override
+					public void run() {
+						songPlayer.fireAlarm();
+
+					}
+				}).start();
+			}
+		});
+		btnFireAlarm.setForeground(Color.red);
+		btnFireAlarm.setBounds(308, 11, 117, 29);
+		mainContentPane.add(btnFireAlarm);
 		
 	}
 }

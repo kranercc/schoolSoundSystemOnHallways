@@ -33,30 +33,72 @@ import javazoom.jl.player.Player;
 
 public class SongPlayer {
 
+	//special cases
+	public void fireAlarm()
+	{
+		playSong("fire.mp3");
+	}
+	public void bellRing()
+	{
+		playSong("bell.mp3");
+		System.out.println("Canta colopotelu :D");
+	}
+	
 	//ONLY MP3 AND WAV SUPPORT
 	public void playSong(String songToBePlayedString){
 		
 		String songExtensionString = songToBePlayedString.substring(songToBePlayedString.lastIndexOf(".")+1);
-		
-		
-		//time check first
-		shouldPlay();
-		
+				
 		if(songExtensionString.equals("wav"))
 		{
 			System.out.println("Using WAV Logics...");
-			//Play_WAV(songToBePlayedString);
+			Play_WAV(songToBePlayedString);
 		}
 		if(songExtensionString.equals("mp3"))
 		{
 			System.out.println("Using MP3 Logics...");
-			//Play_MP3(songToBePlayedString);
+			Play_MP3(songToBePlayedString);
 		
 		}
 		
 	}
 	
-	public boolean shouldPlay()
+	public boolean shouldPlayBell()
+	{
+		ArrayList<Integer> musicHours = new ArrayList<Integer>(Arrays.asList(8,9,10,11,12,13,14));
+		ArrayList<Integer> musicDaysArrayList = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5));
+		
+		int hourNow = new Date().getHours();
+		int minuteNow = new Date().getMinutes();
+		int dayNow = new Date().getDay(); // luni e 1 
+		
+		//check for day
+		if (musicDaysArrayList.contains(dayNow)) {
+			//hour check
+			if (musicHours.contains(hourNow)) {
+				//iesire pana la orao 10 inclusiv
+				if (minuteNow == 50 && hourNow <= 10 ) {
+					return true;
+				}
+				//intrare pana la ora 10 inclusiv
+				if (minuteNow == 0 && hourNow <= 10) {
+					return true;
+				}
+				//iesire dupa ora 10
+				if (minuteNow == 0 && hourNow > 10) {
+					return true;
+				}
+				//intrare dupa ora 10
+				if (minuteNow == 10 && hourNow > 10) {
+					return true;
+				}
+			}
+		}
+		System.out.format("Checked for bell at H:%d-M:%d\n", hourNow,minuteNow);
+		return false;
+	}
+	
+	public boolean shouldPlayMusic()
 	{
 		
 		ArrayList<Integer> musicHours = new ArrayList<Integer>(Arrays.asList(8,9,10,11,12,13,14));
@@ -83,15 +125,8 @@ public class SongPlayer {
 				
 				
 			}			
-			//i dont look thic until i turn around checcc
 			
-		}
-		
-		
-		//
-		//	SPECIAL CASES CHEEEECK
-		//
-		
+		}	
 		
 		//System.out.println(hourNow + "<>" + minuteNow + "<>" + dayNow);
 		return false;
