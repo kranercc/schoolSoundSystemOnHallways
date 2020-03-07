@@ -36,7 +36,8 @@ public class SongPlayer {
 	//special cases
 	public void fireAlarm()
 	{
-		playSong("fire.mp3");
+		//playSong("fire.mp3");
+
 	}
 	public void bellRing()
 	{

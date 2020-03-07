@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import github.kranercc.automations.SongPlayer;
 import github.kranercc.input.CustomSong_field;
+import github.kranercc.logging.Logger;
 import github.kranercc.randomMusic.RandomMusicChooser;
 
 import javax.swing.JLabel;
@@ -30,7 +31,6 @@ public class MainControlUI extends JFrame {
 	private JTextField textFieldSongName;
 	private CustomSong_field customSong_field;
 	private SongPlayer songPlayer;
-
 	/**
 	 * Launch the application.
 	 */
@@ -171,6 +171,7 @@ public class MainControlUI extends JFrame {
 		JButton btnFireAlarm = new JButton("Fire Alarm");
 		btnFireAlarm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				new Thread( new Runnable() {
 					
 					@Override
